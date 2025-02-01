@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  python-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: python-app
+    tty: true
+    env_file:
+      - .env
+    # restart: always
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -f 'python /src/healthcheck.py' || exit 1"]
+      interval: 10s
+      retries: 3
+      start_period: 5s
+      timeout: 2s
+    labels:
+      autoheal: true
+  autoheal:
+    environment:
+      AUTOHEAL_INTERVAL: 10
+    image: willfarrell/autoheal:latest
+    network_mode: none
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock
