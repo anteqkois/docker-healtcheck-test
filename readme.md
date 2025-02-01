@@ -1,0 +1,1 @@
+Test docekr compsoe healtcheck option on python app without API
