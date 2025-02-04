@@ -5,8 +5,8 @@ from utils import getMongoClient
 
 try:
 	# Connect to MongoDB
-	client = getMongoClient("target", 'order_book4')
-	db = client['order_book4']
+	client = getMongoClient("target", 'order_book')
+	db = client['order_book']
 	collection = db["order_book_ranking"]
 	
 	# Get the latest document based on the 'ts' field
